@@ -1,11 +1,11 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { Cookie } from "next/font/google";
 
 
 export const authOptions: NextAuthOptions = {
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
+        maxAge: 60 * 60
     },
     providers: [
         CredentialsProvider({
@@ -48,6 +48,9 @@ export const authOptions: NextAuthOptions = {
             return session
         }
     },
+    pages: {
+        signIn: '/login'
+    }
 }
 
 const handler = NextAuth(authOptions)

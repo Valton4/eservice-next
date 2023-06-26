@@ -1,4 +1,4 @@
-export default function AdminPage() {
+export default async function AdminPage() {
     return <>
         this is the admin page
     </>

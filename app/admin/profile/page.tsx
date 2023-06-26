@@ -13,6 +13,8 @@ export default async function adminProfile() {
                 Authorization: `bearer ${token}`
             },
         })
+    const res = await data.json();
+
     return (
         <div className="container">
             <h1>Hello World</h1>
