@@ -8,7 +8,7 @@ export default async function NavBar() {
         <nav className=" p-4 bg-sky-400">
             <ul className="flex gap-2  content-end">
                 <li><Link href="/">Home</Link></li>
-                <li><Link href="/about">About</Link></li>
+                <li><Link href="/attendance">Attendance</Link></li>
                 <li><Link href="/profile">Profile</Link></li>
                 <li><Link href="/contact">Contact</Link></li>
                 {session && <li><SignOutButton /></li>}

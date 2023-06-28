@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { HeadTitle } from "@/components/HeadTitle";
 import { getServerSession } from "next-auth";
 
 export default async function Profile() {
@@ -18,10 +19,7 @@ export default async function Profile() {
 
     return (
         <div className="">
-            <div className="header container m-auto bg-gray-100 shadow-2xl">
-                <h1 className=" text-start text-3xl text-red-700">Profili im</h1>
-                <p className="text-gray-300">Edito të dhënat personale</p>
-            </div>
+            <HeadTitle title="Profili im" description="Edito të dhënat personale" />
             <div className="container m-auto mt-28 flex">
                 <div className="left basis-1/3">
 
