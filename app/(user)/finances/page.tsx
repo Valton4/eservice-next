@@ -1,4 +1,5 @@
-import { HeadTitle } from '@/components/HeadTitle'
+import { HeadTitle } from '@/components/index'
+
 export default async function FinancesPage() {
     return (
         <>

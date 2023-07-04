@@ -5,7 +5,7 @@ export default async function adminProfile() {
     const session = await getServerSession(authOptions);
     const token = session?.user.user.token
     const userId = session?.user.user.credentials.id
-    const data = await fetch(`https://localhost:44391/api/Admin/getUsers?userId=${userId}`,
+    const data = await fetch(`${process.env.API_URL}/api/Admin/getUsers?userId=${userId}`,
         {
             method: "GET",
             headers: {

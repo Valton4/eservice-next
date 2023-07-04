@@ -18,7 +18,6 @@ export default withAuth(
     response.headers.set("Access-Control-Allow-Headers", "Content-Type ,Authorization")
     response.headers.set("Access-Control-Max-Age", "86400")
 
-
     return response;
 
 

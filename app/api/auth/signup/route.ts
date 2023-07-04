@@ -1,7 +1,7 @@
 export async function POST(request: Request) {
 
     const { email, password, role, userName } = request as any
-    const res = await fetch('https://localhost:44391/api/Authentication/Register', {
+    const res = await fetch(`${process.env.API_URL}/api/Authentication/Register`, {
         method: "POST",
         headers: {
             'Accept': '*/*',

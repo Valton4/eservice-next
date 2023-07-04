@@ -5,3 +5,8 @@
 * {
     font-family: 'Fira Code', monospace;
 }
+
+.rounded-image {
+    width: 150px;
+    height: 150px;
+}

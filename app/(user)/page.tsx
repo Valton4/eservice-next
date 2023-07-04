@@ -1,4 +1,4 @@
-import { HeadTitle } from "@/components/HeadTitle"
+import { HeadTitle } from "@/components/index"
 export default async function Home() {
     return <>
         <HeadTitle title="Ballina" description="Literatura - publikimet e fundit" />

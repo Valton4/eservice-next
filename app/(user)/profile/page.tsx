@@ -1,12 +1,34 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { HeadTitle } from "@/components/HeadTitle";
+import { HeadTitle } from "@/components/index";
 import { getServerSession } from "next-auth";
-
+import ImageContainer from "./image";
 export default async function Profile() {
     const session = await getServerSession(authOptions);
-    const token = session?.user.user.token
-    const userId = session?.user.user.credentials.id
-    const data = await fetch(`https://localhost:44391/api/Admin/getUsers?userId=${userId}`,
+    const token = session?.user.token
+    const userId = session?.user.credentials.id
+    const fetchImage = async () => {
+        try {
+            const response = await fetch(`${process.env.API_URL}/api/Admin/student/${userId}/image`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const imageBlob = await response.blob();
+                const imageUrl = URL.createObjectURL(imageBlob);
+
+                return imageUrl
+            } else {
+                console.error('Failed to fetch image');
+            }
+        } catch (error) {
+            console.error('Error fetching image:', error);
+        }
+    };
+    const image = await fetchImage();
+    const data = await fetch(`${process.env.API_URL}/api/Admin/getUsers?userId=${userId}`,
         {
             method: "GET",
             headers: {
@@ -15,14 +37,17 @@ export default async function Profile() {
             },
         })
     const res = await data.json();
-    console.log(res)
-
     return (
-        <div className="">
+        <div >
             <HeadTitle title="Profili im" description="Edito të dhënat personale" />
-            <div className="container m-auto mt-28 flex">
+            <div className="container m-auto mt-28 flex gap-4">
                 <div className="left basis-1/3">
-
+                    <div className="h-2/3 bg-white  pt-4 rounded-md">
+                        <ImageContainer image={image} userId={userId} token={token} />
+                        <div className="content">
+                            <h1>{session?.user.credentials.userName}</h1>
+                        </div>
+                    </div>
                 </div>
                 <div className="right basis-2/3  ">
                     <div className="p-5 bg-white rounded-md border border-gray-500">
@@ -38,7 +63,7 @@ export default async function Profile() {
                                 </div>
                                 <div className="grid gap-2 p-2">
                                     <label htmlFor="phoneNumber" className="text-lg">Numri i tel</label>
-                                    <input type="text" id="phoneNumber" className="text-lg border-b-2" value={el.phoneNumber} disabled />
+                                    <input type="text" id="phoneNumber" className="text-lg border-b-2" disabled />
                                 </div>
                                 <div className="grid gap-2 p-2">
                                     <label htmlFor="currentPassword" className="text-lg">Fjalkalimi aktual</label>
@@ -46,6 +71,10 @@ export default async function Profile() {
                                 </div>
                             </div>
                         ))}
+                        <div className="mt-4 flex gap-2 ">
+                            <button className="btn btn-danger w-50">Ruaj Ndryshimet</button>
+                            <button className="btn btn-primary w-50">Ndrysho numrin e telefonit</button>
+                        </div>
                     </div>
 
                 </div>
