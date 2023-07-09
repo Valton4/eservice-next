@@ -1,4 +1,5 @@
 // export { default } from "next-auth/middleware";
+import { url } from "inspector";
 import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,12 +7,7 @@ export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
 
 
-  function middleware(req) {
-    if (req.nextUrl.pathname.startsWith('/admin') &&
-      req.nextauth.token.user.roles.result[0].toString() !== "Admin"
-    ) {
-      return new NextResponse("You are not authorized")
-    }
+  function middleware(req: NextRequest) {
     const response = NextResponse.next();
     response.headers.set("Access-Control-Allow-Origin", "*")
     response.headers.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")

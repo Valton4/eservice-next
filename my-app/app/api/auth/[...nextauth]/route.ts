@@ -1,7 +1,7 @@
-import { error } from "console";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import {error} from "console";
+import NextAuth, {type NextAuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import {useRouter} from "next/navigation";
 
 export const authOptions: NextAuthOptions = {
     session: {
@@ -17,11 +17,12 @@ export const authOptions: NextAuthOptions = {
                     type: 'email',
                     placeholder: 'hello@example.com',
                 },
-                password: { label: 'Password', type: 'password' },
+                password: {label: 'Password', type: 'password'},
             },
             async authorize(credentials: any) {
-                const { email, password } = credentials as any;
-                console.log(email)
+                const {email, password} = credentials as any;
+
+
                 const res = await fetch(`${process.env.API_URL}/api/Authentication/Login`, {
                     method: 'POST',
                     headers: {
@@ -36,18 +37,19 @@ export const authOptions: NextAuthOptions = {
                 const Data = await res.json();
 
                 if (res.ok && Data) {
-                    return Data;
+                    return Data
                 } else {
-                    return null; // Return null when login fails
+                    console.log(password)
+                    throw new Error('Login failed'); // Return null when login fails
                 }
             },
         }),
     ],
     callbacks: {
-        async jwt({ token, user }) {
-            return { ...token, ...user };
+        async jwt({token, user}) {
+            return {...token, ...user};
         },
-        async session({ session, token, user }) {
+        async session({session, token, user}) {
             session.user = token;
             return session;
         },
@@ -59,4 +61,4 @@ export const authOptions: NextAuthOptions = {
 
 
 const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+export {handler as GET, handler as POST}

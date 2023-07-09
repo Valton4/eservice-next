@@ -6,12 +6,23 @@ export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
 
 
-  function middleware(req) {
-    if (req.nextUrl.pathname.startsWith('/admin') &&
-      req.nextauth.token.user.roles.result[0].toString() !== "Admin"
-    ) {
-      return new NextResponse("You are not authorized")
-    }
+  function middleware(req: NextRequest) {
+
+    const path = req.nextUrl.pathname
+
+    const publicPaths = path === '/login' || path === '/register'
+
+    const token = req.cookies.get('next-auth.session-token')?.value || ''
+    console.log(token)
+
+    if (publicPaths && token)
+      return NextResponse.redirect(new URL('/', req.nextUrl))
+
+
+    if (!publicPaths && !token)
+      return NextResponse.redirect(new URL('/login', req.nextUrl))
+
+
     const response = NextResponse.next();
     response.headers.set("Access-Control-Allow-Origin", "*")
     response.headers.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")

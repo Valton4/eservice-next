@@ -5,7 +5,6 @@ import styles from './profile.module.css'
 const ImageComponent = ({ userId, token }: any) => {
     const [imageUrl, setImageUrl] = useState('');
 
-    console.log(process.env.API_URL)
 
     useEffect(() => {
         const fetchImage = async () => {

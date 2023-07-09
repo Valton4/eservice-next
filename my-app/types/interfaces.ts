@@ -9,8 +9,11 @@ export interface User {
 
 
 export interface loggedInUser {
-    id: string,
-    UserName:string,
-    Email:string,
-    Password:string
+    user: {
+        id: string,
+        userName: string,
+        email: string,
+        passwordHash: string
+    },
+    roles: [string]
 }

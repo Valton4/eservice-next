@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google'
 import { Providers } from '@/app/providers'
-const inter = Inter({ subsets: ['latin'] })
 import { NavBar } from '@/components/index'
 export const metadata = {
   title: 'Create Next App',

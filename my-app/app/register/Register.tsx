@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link';
 import React, { useRef } from 'react';
-import { useState } from 'react';
 
 function RegisterForm({ roles }: any) {
     const formData = useRef<HTMLFormElement>(null);

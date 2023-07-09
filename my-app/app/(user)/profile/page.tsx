@@ -1,11 +1,12 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { HeadTitle } from "@/components/index";
 import { getServerSession } from "next-auth";
+import React from "react";
 import ImageContainer from "./image";
 export default async function Profile() {
     const session = await getServerSession(authOptions);
-    const token = session?.user.token
     const userId = session?.user.credentials.id
+    const token = session?.user.token
     const fetchImage = async () => {
         try {
             const response = await fetch(`${process.env.API_URL}/api/Admin/student/${userId}/image`, {

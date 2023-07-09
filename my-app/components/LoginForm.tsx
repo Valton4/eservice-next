@@ -3,22 +3,25 @@ import { signIn } from "next-auth/react"
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { NextRequest, NextResponse } from "next/server";
 export default function LoginForm() {
     const formData = useRef<HTMLFormElement>(null);
     const redirect = useRouter();
-
+    const [error, setError] = useState('')
     async function Submit(e: any) {
         const { email, password } = formData.current as any
-        console.log(email.value, password.value)
         e.preventDefault()
         const data = await signIn('credentials', {
             email: email.value,
             password: password.value,
             redirect: false
         })
-        if (data?.ok) {
-            redirect.push('/')
-        }
+
+        if (data?.error)
+            setError('your email or password is incorrect')
+
+        if (data?.ok)
+            return redirect.push('/')
     }
 
 
@@ -26,6 +29,7 @@ export default function LoginForm() {
 
         <div className="container row m-auto items-center justify-center vh-100">
             <form ref={formData} className="col-lg-4" onSubmit={Submit} >
+                <p className=" bg-red-800">{error}</p>
                 <label htmlFor="input-group-1" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
                 <div className="relative mb-6">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">

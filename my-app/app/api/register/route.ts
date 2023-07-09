@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: Request) {
     try {
         const { registerUser, studentImage } = await request.json();
-        console.log(studentImage);
 
         const res = await fetch('https://localhost:44391/api/Authentication/Register', {
             method: 'POST',
@@ -27,7 +26,6 @@ export async function POST(request: Request) {
                 return NextResponse.json({ success: false, message: 'Registration failed' });
             }
         } else {
-            console.log(studentImage)
             return NextResponse.json({ success: false, message: 'Registration failed' + studentImage });
         }
     } catch (error) {

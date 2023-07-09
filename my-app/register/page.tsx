@@ -1,6 +1,6 @@
 import RegisterPage from "./Register";
 export default async function Register() {
-    const res = await fetch('https://localhost:44391/api/Authentication/GetRoles');
+    const res = await fetch('http://localhost:5102/api/Authentication/GetRoles');
     const roles = await res.json();
     return (
         <>

@@ -9,7 +9,6 @@ export default function LoginForm() {
 
     async function Submit(e: any) {
         const { email, password } = formData.current as any
-        console.log(email.value, password.value)
         e.preventDefault()
         const data = await signIn('credentials', {
             email: email.value,

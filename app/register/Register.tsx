@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link';
 import React, { useRef } from 'react';
-import { useState } from 'react';
 
 function RegisterForm({ roles }: any) {
     const formData = useRef<HTMLFormElement>(null);
@@ -12,15 +11,6 @@ function RegisterForm({ roles }: any) {
             const { userName, email, password, role, studentImage } = formData.current as any
 
             const Form = new FormData();
-
-            const { name, type, lastModified, size, webkitRelativePath } = studentImage.files[0]
-            const obj = {
-                name,
-                lastModified,
-                webkitRelativePath,
-                size,
-                type,
-            }
             Form.append('UserName', userName.value);
             Form.append('Email', email.value);
             Form.append('Password', password.value);
